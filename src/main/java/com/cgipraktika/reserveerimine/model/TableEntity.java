@@ -4,29 +4,37 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TableEntity {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private int seats;
     private String zone;
-    private boolean hasWindow;
-    private boolean isPrivate;
-    private boolean isAccessible;
-    private boolean nearKidsZone;
 
-    protected TableEntity() {}
+    @Builder.Default
+    private boolean occupied = false;
 
-    public TableEntity(int seats, String zone, boolean hasWindow, boolean isPrivate, boolean isAccessible, boolean nearKidsZone) {
-        this.seats = seats;
-        this.zone = zone;
-        this.hasWindow = hasWindow;
-        this.isPrivate = isPrivate;
-        this.isAccessible = isAccessible;
-        this.nearKidsZone = nearKidsZone;
-    }
+    @Builder.Default
+    private boolean hasWindow = false;
+
+    @Builder.Default
+    private boolean isPrivate = false;
+
+    @Builder.Default
+    private boolean isAccessible = false;
+
+    @Builder.Default
+    private boolean nearKidsZone = false;
 }
