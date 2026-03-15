@@ -1,13 +1,13 @@
 package com.cgipraktika.reserveerimine.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -15,26 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TableEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private int seats;
     private String zone;
+    private boolean occupied;
 
     @Builder.Default
-    private boolean occupied = false;
-
-    @Builder.Default
-    private boolean hasWindow = false;
-
-    @Builder.Default
-    private boolean isPrivate = false;
-
-    @Builder.Default
-    private boolean isAccessible = false;
-
-    @Builder.Default
-    private boolean nearKidsZone = false;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<TableFeature> features = new HashSet<>();
 }
