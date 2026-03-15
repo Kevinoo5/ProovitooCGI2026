@@ -3,22 +3,28 @@ import React, { useState, useEffect } from 'react';
 function App() {
   // State for filters
   const [guests, setGuests] = useState(2);
-  const [preference, setPreference] = useState('');
-
-  // State for data from Spring Boot
+  const [preferences, setPreferences] = useState([]);
   const [tables, setTables] = useState([]);
   const [recommendation, setRecommendation] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Function to fetch tables based on filters
+  const [features, setFeatures] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/features')
+        .then(res => res.json())
+        .then(data => setFeatures(data));
+  }, []);
+
   const searchTables = async () => {
     setLoading(true);
     try {
-      // Replace with your actual endpoint
-      const response = await fetch(`http://localhost:8080/api/availableFor?guests=${guests}`);
+      const prefsQuery = preferences.length > 0 ? `&prefs=${preferences.join(',')}` : '';
+      const response = await fetch(`http://localhost:8080/api/availableFor?guests=${guests}${prefsQuery}`);
+
       const data = await response.json();
-      setTables(data.allTables); // Assuming backend sends all tables
-      setRecommendation(data.suggestedTableId); // Highlighting the 'best' one
+      setTables(data.allTables);
+      setRecommendation(data.suggestedTableId);
     } catch (error) {
       console.error("Error fetching tables:", error);
     } finally {
@@ -37,13 +43,24 @@ function App() {
             <input type="number" value={guests} onChange={(e) => setGuests(e.target.value)} min="1" />
           </label>
 
-          <select value={preference} onChange={(e) => setPreference(e.target.value)}>
-            <option value="">No Preference</option>
-            <option value="WINDOW">Window Seat</option>
-            <option value="PRIVACY">Quiet Corner</option>
-            <option value="ACCESSIBLE">Accessible</option>
-          </select>
+          <div>
+            {features.map(f => (
+                <label key={f.id} style={{ display: 'block', marginBottom: '5px' }}>
+                  <input
+                      type="checkbox"
+                      checked={preferences.includes(f.id)}
+                      onChange={() => {
+                        const nextPreferences = preferences.includes(f.id)
+                            ? preferences.filter(p => p !== f.id)
+                            : [...preferences, f.id];
 
+                        setPreferences(nextPreferences);
+                      }}
+                  />
+                  {f.label}
+                </label>
+            ))}
+          </div>
           <button onClick={searchTables} style={{ padding: '5px 15px', cursor: 'pointer' }}>
             Find Tables
           </button>
@@ -82,8 +99,8 @@ function App() {
                         }}
                     >
                       {isRecommended && <span style={{ fontSize: '10px', fontWeight: 'bold', position: 'absolute', top: '5px' }}>⭐ BEST FIT</span>}
-                      <strong>Table {table.tableNumber}</strong>
-                      <span>Seats: {table.capacity}</span>
+                      <strong>Table {table.id}</strong>
+                      <span>Seats: {table.seats}</span>
                       <small>{isOccupied ? 'Occupied' : 'Available'}</small>
                     </div>
                 );

@@ -15,6 +15,10 @@ import java.util.Set;
 public class TableService {
     private final TableRepository tableRepository;
 
+    public List<TableEntity> getAllTables() {
+        return tableRepository.findAll();
+    }
+
     public List<TableEntity> getAllOpenTables(int peopleCount) {
         return tableRepository.findByOccupiedFalseAndSeatsGreaterThanEqual(peopleCount);
     }
