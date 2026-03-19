@@ -14,17 +14,21 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "restaurant_tables")
 public class TableEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private int seats;
+
+    @Column(nullable = false)
     private String zone;
-    private boolean occupied;
 
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "table_features", joinColumns = @JoinColumn(name = "table_id"))
     private Set<TableFeature> features = new HashSet<>();
 }

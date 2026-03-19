@@ -36,7 +36,7 @@ public class TableController {
 
     @GetMapping("/availableFor")
     public ResponseEntity<SearchResponse> getOpenTables(@RequestParam int guests, @RequestParam(required=false) Set<TableFeature> prefs) {
-        List<TableEntity> tables = tableService.getAllOpenTables(guests);
+        List<TableEntity> tables = tableService.getAllTables();
         Set<TableFeature> safePrefs = (prefs == null) ? Set.of() : prefs;
 
         return ResponseEntity.ok(tableService.getRecommendedTables(tables, guests, safePrefs));

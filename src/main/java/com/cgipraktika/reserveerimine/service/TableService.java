@@ -19,16 +19,14 @@ public class TableService {
         return tableRepository.findAll();
     }
 
-    public List<TableEntity> getAllOpenTables(int peopleCount) {
-        return tableRepository.findByOccupiedFalseAndSeatsGreaterThanEqual(peopleCount);
-    }
-
     public int getTableScore(TableEntity table, int guests, Set<TableFeature> features) {
         int score = 0;
         if (table.getSeats() == guests) {
             score += 50;
         } else if (table.getSeats() > guests) {
             score += 50 - (table.getSeats() - guests) * 2;
+        } else {
+            score += 50 - (guests - table.getSeats()) * 2;
         }
 
         long matchingFilters = table.getFeatures().stream().filter(features::contains).count();
