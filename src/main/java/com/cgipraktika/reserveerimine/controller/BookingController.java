@@ -15,12 +15,19 @@ import java.util.List;
 public class BookingController {
     private final BookingService bookingService;
 
-    @GetMapping
+    @GetMapping({"", "/"})
     public ResponseEntity<List<Booking>> getBookings() {
         return ResponseEntity.ok(bookingService.getAllBookings());
     }
 
-    @PostMapping("/addBooking")
+    @GetMapping("/{id:[0-9]+}")
+    public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
+        return bookingService.getBookingById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping({"", "/"})
     public ResponseEntity<Booking> addBooking(@RequestBody BookingRequestDTO dto) {
         Booking newBooking = bookingService.addNewBooking(dto);
         return ResponseEntity.ok(newBooking);

@@ -13,7 +13,5 @@ public interface TableRepository extends CrudRepository<TableEntity, Long> {
     @NullMarked
     @Override
     List<TableEntity> findAll();
-
-    List<TableEntity> findByOccupiedFalseAndSeatsGreaterThanEqual(int seatsIsGreaterThan);
 }
 

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,20 +21,24 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
+    public Optional<Booking> getBookingById(long id) {
+        return bookingRepository.findById(id);
+    }
+
     public Booking addNewBooking(BookingRequestDTO booking) {
-        if (booking.getTableId() == null) {
+        if (booking.tableId() == null) {
             throw new IllegalArgumentException("Table ID can't be null!" + booking);
         }
 
-        TableEntity table = tableRepository.findById(booking.getTableId())
+        TableEntity table = tableRepository.findById(booking.tableId())
                 .orElseThrow(() -> new RuntimeException("Table not found!"));
 
         Booking tableBooking = Booking.builder()
                 .table(table)
-                .customerName(booking.getCustomerName())
-                .guestCount(booking.getGuestCount())
-                .startTime(booking.getStartTime())
-                .endTime(booking.getEndTime())
+                .customerName(booking.customerName())
+                .guestCount(booking.guestCount())
+                .startTime(booking.startTime())
+                .endTime(booking.endTime())
                 .build();
         
         return bookingRepository.save(tableBooking);
