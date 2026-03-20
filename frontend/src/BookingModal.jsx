@@ -9,10 +9,17 @@ const HOURS = Array.from({ length: TOTAL_HOURS }, (_, i) => START_HOUR + i);
 const BookingModal = ({ tableId, onClose }) => {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const [isSelecting, setIsSelecting] = useState(false);
     const [draftSelection, setDraftSelection] = useState(null);
     const [pendingBooking, setPendingBooking] = useState(null);
+
+    const [currentWeekStart, setCurrentWeekStart] = useState(() => {
+        const today = new Date();
+        const day = today.getDay() || 7;
+        today.setDate(today.getDate() - day + 1);
+        today.setHours(0, 0, 0, 0);
+        return today;
+    });
 
     const weekDays = Array.from({ length: 7 }).map((_, i) => {
         const date = new Date(currentWeekStart);
