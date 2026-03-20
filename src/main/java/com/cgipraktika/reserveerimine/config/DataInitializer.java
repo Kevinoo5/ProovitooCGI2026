@@ -22,36 +22,31 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        TableEntity t1 = createTable(2, "Aken", Set.of(TableFeature.WINDOW, TableFeature.PRIVATE));
-        TableEntity t2 = createTable(4, "Keskosa", Set.of(TableFeature.KIDS_ZONE));
-        TableEntity t3 = createTable(2, "Aken", Set.of(TableFeature.WINDOW));
-        TableEntity t4 = createTable(6, "Suur saal", Set.of(TableFeature.ACCESSIBLE));
-        TableEntity t5 = createTable(4, "Keskosa", Set.of(TableFeature.PRIVATE));
+        TableEntity t1 = createTable(2, "Window", Set.of(TableFeature.WINDOW, TableFeature.PRIVATE));
+        TableEntity t2 = createTable(4, "Center", Set.of(TableFeature.KIDS_ZONE));
+        TableEntity t3 = createTable(2, "Window", Set.of(TableFeature.WINDOW));
+        TableEntity t4 = createTable(6, "Main Hall", Set.of(TableFeature.ACCESSIBLE));
+        TableEntity t5 = createTable(4, "Center", Set.of(TableFeature.PRIVATE));
 
         tableRepository.saveAll(List.of(t1, t2, t3, t4, t5));
 
-        // 2. Loome mõned test-broneeringud tänaseks
-        // Broneering lauale 1: täna kell 18:00 - 20:00
         Booking b1 = Booking.builder()
                 .table(t1)
-                .customerName("Mari Tamm")
+                .customerName("Jane Doe")
                 .guestCount(2)
                 .startTime(LocalDateTime.now().withHour(18).withMinute(0))
                 .endTime(LocalDateTime.now().withHour(20).withMinute(0))
                 .build();
 
-        // Broneering lauale 4: täna kell 19:00 - 21:00
         Booking b2 = Booking.builder()
                 .table(t4)
-                .customerName("Jüri Jõgi")
+                .customerName("John Smith")
                 .guestCount(5)
                 .startTime(LocalDateTime.now().withHour(19).withMinute(0))
                 .endTime(LocalDateTime.now().withHour(21).withMinute(0))
                 .build();
 
         bookingRepository.saveAll(List.of(b1, b2));
-
-        System.out.println(">> Andmebaas on algandmetega täidetud!");
     }
 
     private TableEntity createTable(int seats, String zone, Set<TableFeature> features) {
