@@ -42,10 +42,22 @@ Konfiguratsioonifailid on näiteks mõlemad tehtud täielikult AI abiga.
 
 - Back-endi ei soovinud ma väga palju AI abiga kirjutada kuna tahtsin õppida Spring Booti raamistiku kohta. 
 
+- Laudade soovitamise tegin kerge skoorimise süsteemiga, kus igale lauale omistatakse filtrite järgi skoor ning näiteks vähendatakse kui laud on liiga suur antud grupi jaoks.
+
+#### Tehtud eeldused
+- Kasutaja saab ise valida oma broneeringu pikkuse ning ei pea olema koodis kirjas, kui kaua ta peaks sellega tegelema.
+- Ei ole vaja lisada tugevaid turvameetmeid, kuna töö on ainult testimiseks (nt rohkem HTTP error koode).
+- "Lihtne ruudustik" visuaalse plaani kohal võib olla lihtsalt CSS grid.
+
 ---
 
 ### Kokkuvõte
 Projektile kulus umbes 30-40 tundi, kuna pidin õppima uut raamistikku ning ka enda vigade pärast, kus hakkasin liiga palju looma enda loomingut selle asemel, et järgida ülesande püstitust.
-    
+
+Algselt peatusin pikalt korrektse struktuuri loomise koha pealt, aga edaspidi läks töö päris sujuvalt.
+Kõige nõmedam oli, kui olin ise kirjutanud mingi koodi, mis tegelikult ei vastanud ülesande nõuetele ja pidin selle kõik ümber tegema.
+
+Tihti back-endi puhul püüdsin probleemidele leida lahendusi internetis, enne kui kasutasin AI tööriistu, kuna usun, et see õpetab rohkem.
+
 See oli mulle väga huvitav projekt ja olen päris õnnelik sellega, mis sai loodud.
 Ma õppisin selle projekti käigus väga palju uusi asju ning ei saa kurta selle üle, mis valmis sai tehtud.

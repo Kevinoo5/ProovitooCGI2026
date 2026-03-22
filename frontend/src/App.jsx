@@ -175,7 +175,7 @@ function App() {
                                             <p className="text-xs font-bold text-gray-500">{table.seats} SEATS</p>
                                             <p className="text-[11px] font-medium text-gray-400 uppercase tracking-tight">Zone: {table.zone}</p>
 
-                                            {/* Fixed Features Parsing */}
+
                                             <div className="flex flex-wrap justify-center gap-1 mt-2">
                                                 {table.features && Array.isArray(table.features) ? (
                                                     table.features.map((feature, index) => (

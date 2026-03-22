@@ -14,6 +14,7 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
     @Override
     List<Booking> findAll();
 
+    // Kõik broneeringud, mis antud ajahetkel kehtivad
     @Query("SELECT b.table.id FROM Booking b WHERE :start < b.endTime AND :end > b.startTime")
     List<Long> findOccupiedTableIds(LocalDateTime start, LocalDateTime end);
 }
