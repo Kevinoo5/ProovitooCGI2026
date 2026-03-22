@@ -156,12 +156,12 @@ function App() {
                                         key={table.id}
                                         onClick={() => !isOccupied && setSelectedTable(table.id)}
                                         className={`
-                                            relative flex flex-col items-center justify-center p-6 h-40 rounded-3xl border-2 transition-all duration-300
-                                            ${isOccupied
-                                            ? 'bg-red-200 border-red-400 cursor-not-allowed'
+                relative flex flex-col items-center justify-center p-6 min-h-48 rounded-3xl border-2 transition-all duration-300
+                ${isOccupied
+                                            ? 'bg-red-50 border-red-200 cursor-not-allowed opacity-70'
                                             : 'bg-white border-white shadow-sm cursor-pointer hover:shadow-xl hover:-translate-y-1 hover:border-blue-200'}
-                                            ${isRecommended ? 'ring-4 ring-yellow-400 ring-offset-2 border-yellow-400' : ''}
-                                        `}
+                ${isRecommended ? 'ring-4 ring-yellow-400 ring-offset-2 border-yellow-400' : ''}
+            `}
                                     >
                                         {isRecommended && (
                                             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-400 text-yellow-900 text-[10px] font-black px-4 py-1 rounded-full shadow-md z-10 whitespace-nowrap">
@@ -170,12 +170,29 @@ function App() {
                                         )}
 
                                         <span className="text-4xl font-black text-gray-800">{table.id}</span>
+
                                         <div className="mt-2 text-center">
-                                            <p className="text-sm font-semibold text-gray-500">{table.seats} Seats</p>
-                                            <p className="text-sm font-medium text-gray-400 italic">Zone: {table.zone}</p>
+                                            <p className="text-xs font-bold text-gray-500">{table.seats} SEATS</p>
+                                            <p className="text-[11px] font-medium text-gray-400 uppercase tracking-tight">Zone: {table.zone}</p>
+
+                                            {/* Fixed Features Parsing */}
+                                            <div className="flex flex-wrap justify-center gap-1 mt-2">
+                                                {table.features && Array.isArray(table.features) ? (
+                                                    table.features.map((feature, index) => (
+                                                        <span
+                                                            key={index}
+                                                            className="px-2 py-0.5 bg-blue-50 text-blue-600 text-[9px] font-bold rounded-md border border-blue-100 uppercase"
+                                                        >
+                                {feature.replace('_', ' ')}
+                            </span>
+                                                    ))
+                                                ) : (
+                                                    <span className="text-[10px] text-gray-300 italic">No features</span>
+                                                )}
+                                            </div>
                                         </div>
 
-                                        <div className={`mt-3 px-3 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${isOccupied ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-700'}`}>
+                                        <div className={`mt-3 px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider ${isOccupied ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-700'}`}>
                                             {isOccupied ? `Occupied` : 'Available'}
                                         </div>
                                     </div>
